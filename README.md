@@ -1,6 +1,14 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+create-next-app 으로 설치하면
+1. 컴파일과 번들링이 자동으로 된다. (webpack과 babel)
+2. 자동 리프레쉬 기능으로 수정하면 화면에 바로 반영된다.
+3. 서버사이드 헨더링이 지원된다.
+4. 스태틱 파일을 지원한다.
+
 ## Getting Started
+
+npx craete-next-app
 
 First, run the development server:
 
