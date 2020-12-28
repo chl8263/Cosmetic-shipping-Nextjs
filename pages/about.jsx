@@ -1,4 +1,4 @@
-const About = ({ Component, pageProps }) => {
+const About = ({  }) => {
     return (
       <div>
         About
