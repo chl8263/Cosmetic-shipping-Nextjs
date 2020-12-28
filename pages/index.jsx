@@ -9,7 +9,7 @@ const Home = ({ Component, pageProps }) => {
   const [list, setList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const API_URL = "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   function getData(){
     axios.get(API_URL).then(res => {
@@ -50,7 +50,6 @@ const Home = ({ Component, pageProps }) => {
           <ItemList list={list.slice(9)} />
         </>
       )}
-
       
     </div>
   )

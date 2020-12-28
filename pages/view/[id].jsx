@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react';
 import { Loader } from 'semantic-ui-react';
 import Item from '../../src/component/Item';
 
-const Post = ({ item }) => {
+const Post = ({ item, name }) => {
   
   return (
       <>
         {item && (
-            <Item item={item}/>
+            <>
+                <Item item={item}/>
+                {name} 환경 입니다.
+            </>
         )}
       </>
   );
@@ -26,6 +29,7 @@ export async function getServerSideProps(context){
     return {
         props: {
             item: data,
+            name: process.env.name
         },
     };
 }
