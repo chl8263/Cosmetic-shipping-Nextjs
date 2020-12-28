@@ -1,9 +1,11 @@
-const About = ({  }) => {
+const About = ({ item }) => {
     return (
-      <div>
-        About
-      </div>
+        <>
+            <div>
+                
+            </div>
+        </>
     )
   }
   
-  export default About;
+export default About;

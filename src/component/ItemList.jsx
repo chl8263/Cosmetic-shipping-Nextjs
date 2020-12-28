@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Grid } from "semantic-ui-react";
 import styles from "./itemList.module.css";
+import Link from 'next/link';
 
 const ItemList = ({ list }) => {
 
@@ -16,20 +17,24 @@ const ItemList = ({ list }) => {
                 <Grid.Row>
                     {itemList.map( item => {
                         return (
-                            <Grid.Column>
-                                <div className={styles.wrap}>
-                                    <img 
-                                        src={item.image_link} 
-                                        alt={item.name} 
-                                        className={styles.img_item}
-                                    />
+                            <Grid.Column key={item.id}>
+                                <Link href={`/view/${item.id}`}>
+                                    <a>
+                                        <div className={styles.wrap}>
+                                            <img 
+                                                src={item.image_link} 
+                                                alt={item.name} 
+                                                className={styles.img_item}
+                                            />
 
-                                    <strong className={styles.tit_item}>{item.name}</strong>
-                                    <span className={styles.txt_info}>
-                                        {item.category} {item.product_type}
-                                    </span>
-                                    <strong className={styles.num_price}>${item.price}</strong>
-                                </div>
+                                            <strong className={styles.tit_item}>{item.name}</strong>
+                                            <span className={styles.txt_info}>
+                                                {item.category} {item.product_type}
+                                            </span>
+                                            <strong className={styles.num_price}>${item.price}</strong>
+                                        </div>
+                                    </a>
+                                </Link>
                             </Grid.Column>
                         )
                     })}
