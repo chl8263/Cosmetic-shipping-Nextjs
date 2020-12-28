@@ -26,6 +26,7 @@ const Home = ({ Component, pageProps }) => {
     <div>
       <Head>
         <title> Ewan | main </title>
+        <meta name="description" content="Ewan's commetic ecommerce"></meta>
       </Head>
 
       {isLoading && (
