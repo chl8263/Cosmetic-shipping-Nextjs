@@ -7,7 +7,7 @@ import Top from '../src/component/Top'
 // pageProps 는 데이터 fetching 을 이용해 미리 가져온값, 이걸 사용하지 않는다면 빈 객체가 전달됨
 const MyApp = ({ Component, pageProps }) => { 
   return (
-    <div>
+    <div style={{ width: 1000, margin: "0 auto" }}>
       <Top />
       <Component {...pageProps} />
       <Footer/>
