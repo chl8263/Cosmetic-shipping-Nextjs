@@ -166,3 +166,70 @@ const Error404 = ({  }) => {
   
 export default Error404;
 ```
+
+## Environment separation
+개발환경과 배포환경을 다르게 설정하여 프로젝트를 구성할 수 있다.
+
+- 배포환경 : `.env.production` 이라는 파일을 프로젝트 root 경로에 만든다.
+
+```
+name=PRODUCTION
+NEXT_PUBLIC_API_URL=http://makeup-api.herokuapp.com/api/v1/products.json?brand=dior
+```
+
+- 개발환경 : `.env.development` 이라는 파일을 프로젝트 root 경로에 만든다.
+
+```
+name=DEVELOPMENT
+NEXT_PUBLIC_API_URL=http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline
+```
+
+- nodejs 환경일때, 즉 서버사이드 렌더링이 일어날때 `process.env.변수명` 을 사용할 수 있다.
+
+```javascript
+const Post = ({ item, name }) => {
+  
+  return (
+      <>
+        {item && (
+            <>
+                <Item item={item}/>
+                {name} 환경 입니다.
+            </>
+        )}
+      </>
+  );
+}
+
+export default Post;
+
+export async function getServerSideProps(context){
+    const id = context.params.id;
+    const API_URL = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+    const res = await axios.get(API_URL);
+    const data = res.data;
+
+    return {
+        props: {
+            item: data,
+            name: process.env.name
+        },
+    };
+}
+```
+
+위의 코드의 `process.env.name`을 호출하여 Post component 의 Props 로 전달 하면 환경에 맞는 값이 나온다.
+
+- browser 환경일때 `process.env.NEXT_PUBLIC_변수명` 을 사용할 수 있다.
+
+```javascript
+const Home = ({ Component, pageProps }) => {
+  const [list, setList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  ....
+```
+
+위 코드의 `process.env.NEXT_PUBLIC_API_URL` 를 이용하여 환경에 맞는 값을 가져온다.
