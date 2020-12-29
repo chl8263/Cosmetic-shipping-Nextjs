@@ -6,17 +6,6 @@ import Item from '../../src/component/Item';
 
 const Post = ({ item, name }) => {
 
-    const router = useRouter();
-    
-    if (router.isFallback) {
-        return (
-          <div style={{ padding: "100px 0" }}>
-            <Loader active inline="centered">
-              Loading
-            </Loader>
-          </div>
-        );
-      }
 
     return (
         <>
