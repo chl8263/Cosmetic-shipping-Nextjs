@@ -5,7 +5,17 @@ import { Loader } from 'semantic-ui-react';
 import Item from '../../src/component/Item';
 
 const Post = ({ item, name }) => {
-
+    const router = useRouter();
+    
+    if (router.isFallback) {
+        return (
+          <div style={{ padding: "100px 0" }}>
+            <Loader active inline="centered">
+              Loading
+            </Loader>
+          </div>
+        );
+      }
 
     return (
         <>
@@ -22,14 +32,17 @@ const Post = ({ item, name }) => {
 export default Post;
 
 export async function getStaticPaths(){
+    const apiUrl = process.env.apiUrl;
+    const res = await axios.get(apiUrl);
+    const data = res.data;
+
     return {
-        paths: [
-            {params: {id: '740'}},
-            {params: {id: '730'}},
-            {params: {id: '729'}},
-        ],
-        fallback: true, // fallback: false 는 없는 페이지 대응을 해주지 않는다, 
-                        //true 는 없는페이지를 동적으로 만들고 static 페이지를 만들어 다음부터는 정적 리소스를 제공한다.
+        paths: data.slice(0, 9).map((item) => ({
+          params: {
+            id: item.id.toString(),
+          },
+        })),
+        fallback: true,
     };
 }
 

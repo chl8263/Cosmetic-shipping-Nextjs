@@ -40,6 +40,13 @@ const Gnb = () => {
                         router.push("/contact");
                     }}
                 />
+                <Menu.Item
+                    name="Admin"
+                    active={activeItem === "Admin"}
+                    onClick={() => {
+                        router.push("/Admin");
+                    }}
+                />
             </Menu>
         </>
     )
