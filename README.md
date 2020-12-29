@@ -233,3 +233,60 @@ const Home = ({ Component, pageProps }) => {
 ```
 
 위 코드의 `process.env.NEXT_PUBLIC_API_URL` 를 이용하여 환경에 맞는 값을 가져온다.
+
+## getStaticProps 정적페이지 생성
+
+`getStaticProps` 을 이용하여 페이지를 빌드시 정적으로 만들어 빠르게 제공할 수 있다.
+
+```javascript
+export async function getStaticProps(context){
+    const id = context.params.id;
+    const API_URL = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+    const res = await axios.get(API_URL);
+    const data = res.data;
+
+    return {
+        props: {
+            item: data,
+            name: process.env.name
+        },
+    };
+}
+```
+
+## getStaticPaths
+
+`Pages/view/[id].js` 와 같은 Dynamic router 의 환경에서도 페이지를 정적으로 만들어 제공할 수 있다.
+페이지가 무수히 많아도 많이 클릭하는 페이지 몇개만 사용자에게 빠르게 제공해야할 때 유용하다.
+
+`getStaticPaths` 안에 `param` 값을 넣고 return 하면 `getStaticProps` 의 context로 전달되어 빌드시에 정적 페이지를 생성한다.
+
+아래의 소스코드는 `Pages/view/740`, `Pages/view/730`, `Pages/view/729` 의 페이지를 정적인 페이지로 제공하게 된다.
+
+```javascript
+export async function getStaticPaths(){
+    return {
+        paths: [
+            {params: {id: '740'}},
+            {params: {id: '730'}},
+            {params: {id: '729'}},
+        ],
+        fallback: true, // fallback: false 는 없는 페이지 대응을 해주지 않는다, 
+                        //true 는 없는페이지를 동적으로 만들고 static 페이지를 만들어 다음부터는 정적 리소스를 제공한다.
+    };
+}
+
+export async function getStaticProps(context){
+    const id = context.params.id;
+    const API_URL = `http://makeup-api.herokuapp.com/api/v1/products/${id}.json`;
+    const res = await axios.get(API_URL);
+    const data = res.data;
+
+    return {
+        props: {
+            item: data,
+            name: process.env.name
+        },
+    };
+}
+```
